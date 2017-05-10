@@ -114,6 +114,8 @@ class Sicredi extends BoletoAbstract {
         return $this->codigoCliente;
     }
 
+    protected $posto;
+
     /**
      * Gera o Nosso Número.
      *
