@@ -1269,7 +1269,7 @@ abstract class BoletoAbstract
         extract($this->data);
 
         // Ignore errors inside the template
-        @include $this->getResourcePath() . '/views/' . $this->getLayout();
+        include $this->getResourcePath() . '/views/' . $this->getLayout();
 
         return ob_get_clean();
     }
@@ -1281,8 +1281,8 @@ abstract class BoletoAbstract
      */
     public function getAgenciaCodigoCedente()
     {
-        $agencia = $this->getAgenciaDv() !== null ? $this->getAgencia() . '-' . $this->getAgenciaDv() : $this->getAgencia();
-        $conta = $this->getContaDv() !== null ? $this->getConta() . '-' . $this->getContaDv() : $this->getConta();
+        $agencia = $this->getAgenciaDv() ? $this->getAgencia() . '-' . $this->getAgenciaDv() : $this->getAgencia();
+        $conta = $this->getContaDv() ? $this->getConta() . '-' . $this->getContaDv() : $this->getConta();
         return $agencia . ' / ' . $conta;
     }
 
