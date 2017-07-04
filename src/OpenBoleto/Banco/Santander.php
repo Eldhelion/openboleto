@@ -69,15 +69,13 @@ class Santander extends BoletoAbstract
      * Define os nomes das carteiras para exibição no boleto
      * @var array
      */
-    protected $carteirasNomes = array('101' => 'Cobrança Simples ECR', '102' => 'Cobrança Simples CSR');
+    protected $carteirasNomes = array('101' => 'Cobrança Simples RCR', '102' => 'Cobrança Simples CSR');
 
     /**
      * Define o valor do IOS - Seguradoras (Se 7% informar 7. Limitado a 9%) - Demais clientes usar 0 (zero)
      * @var int
      */
     protected $ios;
-
-    protected $carteiraDv;
 
     /**
      * Define o valor do IOS
@@ -106,8 +104,7 @@ class Santander extends BoletoAbstract
      */
     protected function gerarNossoNumero()
     {
-        $sequencial = substr($this->getSequencial(),0,-1);
-        return self::zeroFill($sequencial, 12) . '-' . self::zeroFill($this->getCarteiraDv(), 1);
+        return self::zeroFill($this->getSequencial(), 13);
     }
 
     /**
@@ -118,26 +115,10 @@ class Santander extends BoletoAbstract
      */
     public function getCampoLivre()
     {
-        return '9' . self::zeroFill($this->getConta(), 8) .
-            self::zeroFill($this->getSequencial(), 13) .
+        return '9' . self::zeroFill($this->getConta(), 7) .
+            $this->getNossoNumero() .
             self::zeroFill($this->getIos(), 1) .
             self::zeroFill($this->getCarteira(), 3);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCarteiraDv()
-    {
-        return $this->carteiraDv;
-    }
-
-    /**
-     * @param mixed $carteiraDv
-     */
-    public function setCarteiraDv($carteiraDv)
-    {
-        $this->carteiraDv = $carteiraDv;
     }
 
     /**
@@ -149,7 +130,6 @@ class Santander extends BoletoAbstract
     {
         return array(
             'esconde_uso_banco' => true,
-            'carteiraDv' => self::zeroFill($this->getCarteiraDv(), 1),
         );
     }
 }

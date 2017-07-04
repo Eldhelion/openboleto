@@ -39,7 +39,7 @@
             <div class="titulo">Local de pagamento</div>
             <div class="conteudo"><?php echo $local_pagamento ?></div>
         </td>
-        <td>
+        <td width="180">
             <div class="titulo">Vencimento</div>
             <div class="conteudo rtl"><?php echo $data_vencimento ?></div>
         </td>
@@ -47,8 +47,11 @@
     <tr>
         <td colspan="7">
             <div class="titulo">Beneficiário</div>
-            <div class="conteudo float_left"><?php echo $cedente ?></div>
-            <div class="conteudo cpf_cnpj"><?php echo $cedente_cpf_cnpj ?></div>
+            <div class="conteudo">
+                <?php echo $cedente ?> - <?php echo $cedente_cpf_cnpj; ?>
+                <div><?php echo $cedente_endereco1; ?></div>
+                <div><?php echo $cedente_endereco2; ?></div>
+            </div>
         </td>
         <td>
             <div class="titulo">Agência/Código beneficiário</div>
@@ -56,15 +59,15 @@
         </td>
     </tr>
     <tr>
-        <td  colspan="2">
+        <td width="110" colspan="2">
             <div class="titulo">Data do documento</div>
             <div class="conteudo"><?php echo $data_documento ?></div>
         </td>
-        <td  colspan="2">
+        <td width="120" colspan="2">
             <div class="titulo">Nº documento</div>
             <div class="conteudo"><?php echo $numero_documento ?></div>
         </td>
-        <td>
+        <td width="60">
             <div class="titulo">Espécie doc.</div>
             <div class="conteudo"><?php echo $especie_doc ?></div>
         </td>
@@ -72,7 +75,7 @@
             <div class="titulo">Aceite</div>
             <div class="conteudo"><?php echo $aceite ?></div>
         </td>
-        <td>
+        <td width="110">
             <div class="titulo">Data processamento</div>
             <div class="conteudo"><?php echo $data_processamento ?></div>
         </td>
@@ -91,7 +94,7 @@
 
         <?php if ($mostra_cip) : ?>
             <!-- Campo exclusivo do Bradesco -->
-            <td>
+            <td width="20">
                 <div class="titulo">CIP</div>
                 <div class="conteudo"><?php echo $cip ?></div>
             </td>
@@ -101,7 +104,7 @@
             <div class="titulo">Carteira</div>
             <div class="conteudo"><?php echo $carteira ?></div>
         </td>
-        <td>
+        <td width="35">
             <div class="titulo">Espécie</div>
             <div class="conteudo"><?php echo $especie ?></div>
         </td>
@@ -109,9 +112,9 @@
             <div class="titulo">Quantidade</div>
             <div class="conteudo"><?php echo $quantidade ?></div>
         </td>
-        <td>
+        <td width="110">
             <div class="titulo">Valor</div>
-            <div class="conteudo"><?php echo $valor_unitario ?></div>
+            <div class="conteudo"></div>
         </td>
         <td>
             <div class="titulo">(=) Valor do Documento</div>
@@ -170,7 +173,7 @@
     <tr>
         <td colspan="7">
             <div class="titulo">Pagador</div>
-            <div class="conteudo"><?php echo $sacado ?></div>
+            <div class="conteudo"><?php echo $sacado ?>, CPF/CNPJ <?php echo $sacado_documento ?></div>
             <div class="conteudo"><?php echo $sacado_endereco1 ?></div>
             <div class="conteudo"><?php echo $sacado_endereco2 ?></div>
 
@@ -182,7 +185,7 @@
 
     <tr>
         <td colspan="6" class="noleftborder">
-            <div class="titulo">Pagador / Avalista <div class="conteudo pagador"><?php echo $sacador_avalista; ?></div></div>
+            <div class="titulo">Avalista <div class="conteudo sacador"><?php echo $sacador_avalista; ?></div></div>
         </td>
         <td colspan="2" class="norightborder noleftborder">
             <div class="conteudo noborder rtl">Autenticação mecânica - Ficha de Compensação</div>

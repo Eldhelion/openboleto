@@ -1,14 +1,14 @@
 {
-    "name": "compufour/openboleto",
+    "name": "Eldhelion/openboleto",
     "type": "library",
     "description": "Biblioteca para geração de boletos bancários.",
     "keywords": ["boleto", "boleto bancario"],
-    "homepage": "http://github.com/compufour/openboleto",
+    "homepage": "http://github.com/Eldhelion/openboleto",
     "license": "MIT",
     "authors": [
         {
-            "name": "Daniel Garajau",
-            "email": "kriansa@facebook.com"
+            "name": "Suporte",
+            "email": "suporte@aptor.com.br"
         }
     ],
     "require": {

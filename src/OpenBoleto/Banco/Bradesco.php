@@ -77,13 +77,6 @@ class Bradesco extends BoletoAbstract
     protected $cip = '000';
 
     /**
-     * Digito de Auto Conferencia do Número Bancário.
-     * 1 posicao
-     * @var int
-    */
-    protected $digitoAutoConferencia;
-
-    /**
      * Gera o Nosso Número.
      *
      * @return string
