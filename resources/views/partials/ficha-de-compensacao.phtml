@@ -86,13 +86,13 @@
     </tr>
     <tr>
         <?php if (isset($esconde_uso_banco) and !$esconde_uso_banco) : ?>
-            <td<?php if (!$mostra_cip) : ?> colspan="2"<?php endif ?>>
+            <td<?php if (isset($mostra_cip) and !$mostra_cip) : ?> colspan="2"<?php endif ?>>
                 <div class="titulo">Uso do banco</div>
                 <div class="conteudo"><?php echo $uso_banco ?></div>
             </td>
         <?php endif; ?>
 
-        <?php if ($mostra_cip) : ?>
+        <?php if (isset($mostra_cip) and $mostra_cip) : ?>
             <!-- Campo exclusivo do Bradesco -->
             <td width="20">
                 <div class="titulo">CIP</div>
