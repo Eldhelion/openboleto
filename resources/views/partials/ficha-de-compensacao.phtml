@@ -85,7 +85,7 @@
         </td>
     </tr>
     <tr>
-        <?php if (!$esconde_uso_banco) : ?>
+        <?php if (isset($esconde_uso_banco) and !$esconde_uso_banco) : ?>
             <td<?php if (!$mostra_cip) : ?> colspan="2"<?php endif ?>>
                 <div class="titulo">Uso do banco</div>
                 <div class="conteudo"><?php echo $uso_banco ?></div>
@@ -100,7 +100,7 @@
             </td>
         <?php endif ?>
 
-        <td<?php if ($esconde_uso_banco) : ?> colspan="3"<?php endif; ?>>
+        <td<?php if (isset($esconde_uso_banco) and $esconde_uso_banco) : ?> colspan="3"<?php endif; ?>>
             <div class="titulo">Carteira</div>
             <div class="conteudo"><?php echo $carteira ?></div>
         </td>
