@@ -45,7 +45,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="7">
+        <td colspan="7" rowspan="2" valign="top">
             <div class="titulo">Beneficiário</div>
             <div class="conteudo">
                 <?php echo $cedente ?> - <?php echo $cedente_cpf_cnpj; ?>
@@ -56,6 +56,12 @@
         <td>
             <div class="titulo">Agência/Código beneficiário</div>
             <div class="conteudo rtl"><?php echo $agencia_codigo_cedente ?></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="titulo">Nosso número</div>
+            <div class="conteudo rtl"><?php echo $nosso_numero ?></div>
         </td>
     </tr>
     <tr>
@@ -80,8 +86,8 @@
             <div class="conteudo"><?php echo $data_processamento ?></div>
         </td>
         <td>
-            <div class="titulo">Nosso número</div>
-            <div class="conteudo rtl"><?php echo $nosso_numero ?></div>
+            <div class="titulo">(=) Valor do Documento</div>
+            <div class="conteudo rtl"><?php echo $valor_documento ?></div>
         </td>
     </tr>
     <tr>
@@ -100,7 +106,7 @@
             </td>
         <?php endif ?>
 
-        <td<?php if (isset($esconde_uso_banco) and $esconde_uso_banco) : ?> colspan="3"<?php endif; ?>>
+        <td<?php if (!isset($esconde_uso_banco) or (isset($esconde_uso_banco) and $esconde_uso_banco)) : ?> colspan="3"<?php endif; ?>>
             <div class="titulo">Carteira</div>
             <div class="conteudo"><?php echo $carteira ?></div>
         </td>
@@ -117,23 +123,13 @@
             <div class="conteudo"></div>
         </td>
         <td>
-            <div class="titulo">(=) Valor do Documento</div>
-            <div class="conteudo rtl"><?php echo $valor_documento ?></div>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="7">
-            <div class="titulo">Instruções (Texto de responsabilidade do beneficiário)</div>
-        </td>
-        <td>
             <div class="titulo">(-) Descontos / Abatimentos</div>
             <div class="conteudo rtl"><?php echo $desconto_abatimento ?></div>
         </td>
     </tr>
     <tr>
-        <td colspan="7" class="notopborder">
-            <div class="conteudo"><?php echo $instrucoes[0]; ?></div>
-            <div class="conteudo"><?php echo $instrucoes[1]; ?></div>
+        <td colspan="7">
+            <div class="titulo">Instruções (Texto de responsabilidade do beneficiário)</div>
         </td>
         <td>
             <div class="titulo">(-) Outras deduções</div>
@@ -142,8 +138,8 @@
     </tr>
     <tr>
         <td colspan="7" class="notopborder">
-            <div class="conteudo"><?php echo $instrucoes[2]; ?></div>
-            <div class="conteudo"><?php echo $instrucoes[3]; ?></div>
+            <div class="conteudo"><?php echo $instrucoes[0]; ?></div>
+            <div class="conteudo"><?php echo $instrucoes[1]; ?></div>
         </td>
         <td>
             <div class="titulo">(+) Mora / Multa</div>
@@ -152,8 +148,8 @@
     </tr>
     <tr>
         <td colspan="7" class="notopborder">
-            <div class="conteudo"><?php echo $instrucoes[4]; ?></div>
-            <div class="conteudo"><?php echo $instrucoes[5]; ?></div>
+            <div class="conteudo"><?php echo $instrucoes[2]; ?></div>
+            <div class="conteudo"><?php echo $instrucoes[3]; ?></div>
         </td>
         <td>
             <div class="titulo">(+) Outros acréscimos</div>
@@ -162,8 +158,8 @@
     </tr>
     <tr>
         <td colspan="7" class="notopborder">
-            <div class="conteudo"><?php echo $instrucoes[6]; ?></div>
-            <div class="conteudo"><?php echo $instrucoes[7]; ?></div>
+            <div class="conteudo"><?php echo $instrucoes[4]; ?></div>
+            <div class="conteudo"><?php echo $instrucoes[5]; ?></div>
         </td>
         <td>
             <div class="titulo">(=) Valor cobrado</div>
