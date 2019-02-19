@@ -29,12 +29,12 @@
         /* Embed the CSS content here */
         <?php include $resource_path . '/css/styles.css' ?>
         <?php include $resource_path . '/css/cecred.css' ?>
+        <?php include $resource_path . '/css/pdf.css' ?>
     </style>
 </head>
 <body>
 
-    <div style="width: 666px">
-        <?php if ($imprime_instrucoes_impressao) :?>    
+    <div>
         <div class="noprint info">
             <h2>Instruções de Impressão</h2>
             <ul>
@@ -47,7 +47,6 @@
         </div>
         <span class="header">Linha digitável para ser utilizada em seu Internet Banking:</span>
         <span class="header" style="font-weight: normal;"><?php echo $linha_digitavel; ?></span>
-        <?php endif ?>
 
         <div class="info-empresa">
             <?php if ($logotipo) : ?>

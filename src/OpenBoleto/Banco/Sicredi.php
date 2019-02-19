@@ -39,8 +39,8 @@ use OpenBoleto\Exception;
  * @license    MIT License
  * @version    1.0
  */
-class Sicredi extends BoletoAbstract {
-
+class Sicredi extends BoletoAbstract
+{
     /**
      * Código do banco
      * @var string
@@ -56,63 +56,10 @@ class Sicredi extends BoletoAbstract {
     protected $logoBanco = 'sicredi.jpg';
 
     /**
-     * Linha de local de pagamento
-     * @var string
-     */
-    protected $localPagamento = 'PREFERENCIALMENTE NAS COOPERATIVAS DE CRÉDITO DO SICREDI';
-
-    /**
-     * Campo obrigatório para emissão de boletos com carteira 198 fornecido pelo Banco com 5 dígitos
-     * @var int
-     */
-    protected $codigoCliente;
-
-    /**
      * Define as carteiras disponíveis para este banco
      * @var array
      */
-    protected $carteiras = array('1', '11', '21', '31', '41', '51');
-
-    /**
-     * Dígito verificador da carteira/nosso número para impressão no boleto
-     * @var int
-     */
-    protected $carteiraDv;
-    protected $campoLivre;
-
-    /**
-     * Define o código do cliente
-     *
-     * @param int $codigoCliente
-     * @return $this
-     */
-    protected $posto;
-
-    /**
-     * Bytecode do boleto
-     * @var int
-     */
-    protected $bytecode = 2;
-
-    /**
-     * Tipo de cobrança
-     * @var int
-     */
-    protected $tipoCobranca = 3;
-
-    public function setCodigoCliente($codigoCliente) {
-        $this->codigoCliente = $codigoCliente;
-        return $this;
-    }
-
-    /**
-     * Retorna o código do cliente
-     *
-     * @return int
-     */
-    public function getCodigoCliente() {
-        return $this->codigoCliente;
-    }
+    protected $carteiras = array('11', '21', '31', '41', '51');
 
     protected $posto;
 
@@ -121,19 +68,20 @@ class Sicredi extends BoletoAbstract {
      *
      * @return string
      */
-    protected function gerarNossoNumero() {
+    protected function gerarNossoNumero()
+    {
         $ano = date("y");
 
         $numero = self::zeroFill($this->getAgencia(), 4) .
-                self::zeroFill($this->getPosto(), 2) .
-                self::zeroFill($this->getConta(), 5) .
-                self::zeroFill($ano, 2) .
-                $this->bytecode .
-                self::zeroFill($this->getSequencial(), 5);
+                  self::zeroFill($this->getPosto(), 2) .
+                  self::zeroFill($this->getConta(), 5) .
+                  self::zeroFill($ano, 2) .
+                  "2" .
+                  self::zeroFill($this->getSequencial(), 5);
 
         $dv = static::modulo11($numero);
 
-        return self::zeroFill($ano, 2) . '/' . $this->bytecode . self::zeroFill($this->getSequencial(), 5) . '-' . $dv['digito'];
+        return self::zeroFill($ano, 2) . '/' . '2' . self::zeroFill($this->getSequencial(), 5) . '-' . $dv['digito'];
     }
 
     /**
@@ -142,15 +90,16 @@ class Sicredi extends BoletoAbstract {
      * @return string
      * @throws \OpenBoleto\Exception
      */
-    public function getCampoLivre() {
-        $numero = $this->tipoCobranca .
-                '1' .
-                self::zeroFill($this->getNossoNumero(false), 9) .
-                self::zeroFill($this->getAgencia(), 4) .
-                self::zeroFill($this->getPosto(), 2) .
-                self::zeroFill($this->getConta(), 5) .
-                '1' .
-                '0';
+    public function getCampoLivre()
+    {
+        $numero = '3' .
+               '1' .
+               self::zeroFill($this->getNossoNumero(false), 9) .
+               self::zeroFill($this->getAgencia(), 4) .
+               self::zeroFill($this->getPosto(), 2) .
+               self::zeroFill($this->getConta(), 5).
+               '1' .
+               '0';
 
         $dv = static::modulo11($numero);
 
@@ -162,14 +111,16 @@ class Sicredi extends BoletoAbstract {
      *
      * @return string
      */
-    public function getAgenciaCodigoCedente() {
+    public function getAgenciaCodigoCedente()
+    {
         return static::zeroFill($this->getAgencia(), 4) . '.' . static::zeroFill($this->getPosto(), 2) . '.' . static::zeroFill($this->getConta(), 5);
     }
 
+
     /**
-     * Retorna o código do Banco no cabeçalho do boleto seguindo o padrão estabelecido
-     *
-     */
+    * Retorna o código do Banco no cabeçalho do boleto seguindo o padrão estabelecido
+    *
+    */
     public function getCodigoBancoComDv() {
         return $this->getCodigoBanco() . '-X';
     }
@@ -178,9 +129,10 @@ class Sicredi extends BoletoAbstract {
      * Define o campo Posto do boleto
      *
      * @param int $cip
-     * @return Sicredi
+     * @return Bradesco
      */
-    public function setPosto($posto) {
+    public function setPosto($posto)
+    {
         $this->posto = $posto;
         return $this;
     }
@@ -190,58 +142,8 @@ class Sicredi extends BoletoAbstract {
      *
      * @return int
      */
-    public function getPosto() {
+    public function getPosto()
+    {
         return $this->posto;
     }
-
-    /**
-     * Retorna o bytecode do boleto
-     * 
-     * @return int
-     */
-    public function getBytecode()
-    {
-        return $this->bytecode;
-    }
-
-    /**
-     * Define o bycode do boleto
-     * 
-     * @param int $bytecode
-     * @return Sicredi
-     */
-    public function setBytecode($bytecode)
-    {
-        $this->bytecode = $bytecode;
-        return $this;
-    }
-
-    /**
-     * Retorna o tipo de cobrança
-     * 
-     * @return int
-     */
-    public function getTipoCobranca()
-    {
-        return $this->tipoCobranca;
-    }
-
-    /**
-     * Define o tipo de cobrança
-     * 
-     * @param int $tipoCobranca
-     * @return Sicredi
-     */
-    public function setTipoCobranca($tipoCobranca)
-    {
-        $this->tipoCobranca = $tipoCobranca;
-        return $this;
-    }
-
-    public function getViewVars() {
-        return array(
-            'carteira' => $this->getCarteira(), // Campo não utilizado pelo Itaú
-        );
-    }
-
 }

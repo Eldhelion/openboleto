@@ -69,14 +69,13 @@ class Santander extends BoletoAbstract
      * Define os nomes das carteiras para exibição no boleto
      * @var array
      */
-    protected $carteirasNomes = array('101' => 'Cobrança Simples ECR', '102' => 'Cobrança Simples CSR');
+    protected $carteirasNomes = array('101' => 'Cobrança Simples RCR', '102' => 'Cobrança Simples CSR');
 
     /**
      * Define o valor do IOS - Seguradoras (Se 7% informar 7. Limitado a 9%) - Demais clientes usar 0 (zero)
      * @var int
      */
     protected $ios;
-
 
     /**
      * Define o valor do IOS
@@ -105,17 +104,13 @@ class Santander extends BoletoAbstract
      */
     protected function gerarNossoNumero()
     {
-        $sequencial = self::zeroFill($this->getSequencial(), 12);
-        return $sequencial . '-' . $this->gerarDigitoVerificadorNossoNumero();
+        $numero = self::zeroFill($this->getSequencial(), 12);
+        $dv = static::modulo11($numero);
+        $numero .= $dv['digito'];
+
+        return $numero;
     }
 
-    protected function gerarDigitoVerificadorNossoNumero() {
-        $sequencial = self::zeroFill($this->getSequencial(), 12);
-        $digitoVerificador = static::modulo11($sequencial);
-        
-        return $digitoVerificador['digito'];
-    }
-    
     /**
      * Método para gerar o código da posição de 20 a 44
      *
@@ -125,12 +120,10 @@ class Santander extends BoletoAbstract
     public function getCampoLivre()
     {
         return '9' . self::zeroFill($this->getConta(), 7) .
-            self::zeroFill($this->getSequencial(), 12) .
-            self::zeroFill($this->gerarDigitoVerificadorNossoNumero(), 1) .            
+            $this->getNossoNumero() .
             self::zeroFill($this->getIos(), 1) .
             self::zeroFill($this->getCarteira(), 3);
     }
-
 
     /**
      * Define variáveis da view específicas do boleto do Santander
@@ -140,7 +133,7 @@ class Santander extends BoletoAbstract
     public function getViewVars()
     {
         return array(
-            'esconde_uso_banco' => true
+            'esconde_uso_banco' => true,
         );
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * OpenBoleto - Geração de boletos bancários em PHP
  *
@@ -92,10 +93,8 @@ class Sicoob extends BoletoAbstract
         $numero = self::zeroFill($this->getSequencial(), 7);
         $sequencia = $this->getAgencia() . self::zeroFill($this->getConvenio(), 10) . $numero;
 
-        $cont=0;
-        $calculoDv = '';
-        // Constante para cálculo  = 3197
-        // c) Multiplicar cada componente da seqüência com o seu correspondente da constante e somar os resultados.
+        $cont = 0;
+        $calculoDv = 0;
         for ($num = 0; $num <= strlen($sequencia); $num++) {
             $cont++;
             if ($cont == 1) {
@@ -112,20 +111,17 @@ class Sicoob extends BoletoAbstract
                 $constante = 7;
                 $cont = 0;
             }
-            $calculoDv = (int)$calculoDv + ((int)substr($sequencia, $num, 1) * $constante);
+            $seqNumeric = (int) substr($sequencia, $num, 1);
+            $calculoDv = $calculoDv + ($seqNumeric * $constante);
         }
-        // c) Multiplicar cada componente da seqüência com o seu correspondente da constante e somar os resultados.
-        $resto = $calculoDv % 11;
 
-        // e) O resto da divisão deverá ser subtraído de 11 achando assim o DV (Se o Resto for igual a 0 ou 1 então o DV é igual a 0).        
-        if ( ($resto == 0) || ($resto == 1) ) {
+        $resto = $calculoDv % 11;
+        $dv = 11 - $resto;
+        if (($dv == 0) || ($dv == 1) || ($dv == 9)) {
             $dv = 0;
-        } else {
-            $dv = 11 - $resto;
         }
 
         return $numero .'-'. $dv;
-        
     }
 
     /**

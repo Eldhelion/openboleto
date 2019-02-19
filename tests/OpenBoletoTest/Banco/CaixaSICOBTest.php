@@ -1,11 +1,10 @@
 <?php
 
-namespace Tests\OpenBoleto\Banco;
+namespace OpenBoletoTest\Banco;
+
 use OpenBoleto\Banco\CaixaSICOB;
 
-
-
-class CaixaSICOBTest extends KernelTestCaseAncestor
+class CaixaSICOBTest extends \PHPUnit\Framework\TestCase
 {
     public function testInstantiateWithoutArgumentsShouldWork()
     {
